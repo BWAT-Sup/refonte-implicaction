@@ -15,7 +15,9 @@ import {SidebarModule} from 'primeng/sidebar';
 import {BoardModule} from './board/board.module';
 import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
-import {StompService} from 'ng2-stomp-service';
+import {ChatModule} from "./chat/component/chat.module";
+
+//import {StompService} from 'ng2-stomp-service';
 
 
 @NgModule({
@@ -37,9 +39,10 @@ import {StompService} from 'ng2-stomp-service';
     SidebarModule,
     BoardModule,
     HttpClientXsrfModule,
+    ChatModule,
     FormsModule
   ],
-  providers: [MessageService, {provide: LOCALE_ID, useValue: 'fr'}, StompService],
+  providers: [MessageService, {provide: LOCALE_ID, useValue: 'fr'}],//StompService],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -63,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/assets/img/*.jpg",
             "/favicon.ico",
             "/**.ttf",
-            "/**.woff"
+            "/**.woff",
+            "/testchat/**"
     };
 
     private static final String[] ADMIN_PROTECTEDS = {
