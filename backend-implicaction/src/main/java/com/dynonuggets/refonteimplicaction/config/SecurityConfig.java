@@ -52,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/jobs/**",
             "/board/**",
             "/admin/**",
+            "/chat/**",
+            "/socket/**",
             "/auth/**",
             "/error",
             "/index.html",
@@ -63,8 +65,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/assets/img/*.jpg",
             "/favicon.ico",
             "/**.ttf",
-            "/**.woff",
-            "/testchat/**"
+            "/**.woff"
     };
 
     private static final String[] ADMIN_PROTECTEDS = {

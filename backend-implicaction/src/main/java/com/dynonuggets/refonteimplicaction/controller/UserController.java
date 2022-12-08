@@ -6,6 +6,7 @@ import com.dynonuggets.refonteimplicaction.service.AuthService;
 import com.dynonuggets.refonteimplicaction.service.GroupService;
 import com.dynonuggets.refonteimplicaction.service.RelationService;
 import com.dynonuggets.refonteimplicaction.service.UserService;
+import com.dynonuggets.refonteimplicaction.storage.UserStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +22,7 @@ import static com.dynonuggets.refonteimplicaction.utils.ApiUrls.*;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin
 @RequestMapping(USER_BASE_URI)
 public class UserController {
 
@@ -31,9 +33,9 @@ public class UserController {
 
     @GetMapping("/registration/{userName}")
     public ResponseEntity<Void> register(@PathVariable String userName) {
-        System.out.println("handlign user request" + userName);
+        System.out.println("handling register user request: " + userName);
         try {
-            //UserStorage.getInstance().setUsers(userName);
+            UserStorage.getInstance().setUser(userName);
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
@@ -42,7 +44,7 @@ public class UserController {
 
     @GetMapping("/fetchAllUsers")
     public Set<String> fetchAll() {
-        return null; //UserStorage.getInstance().getUsers();
+        return UserStorage.getInstance().getUsers();
     }
 
     @GetMapping
