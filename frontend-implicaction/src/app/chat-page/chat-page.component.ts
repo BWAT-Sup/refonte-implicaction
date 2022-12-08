@@ -1,14 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, TemplateRef} from '@angular/core';
+import {Constants} from "../config/constants";
+import {Univers} from "../shared/enums/univers";
+import {User} from "../shared/models/user";
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 
-
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-chat-page',
+  templateUrl: './chat-page.component.html',
+  styleUrls: ['./chat-page.component.scss']
 })
-export class AppComponent implements OnInit {
+export class ChatPageComponent {
+
+  readonly constant = Constants;
+  readonly univer = Univers;
+  @Input()
+  user: User;
+  @Input()
+  innerTemplate: TemplateRef<any>;
+
   title = 'WebSocketChatRoom';
   greetings: string[] = [];
   disabled = true;

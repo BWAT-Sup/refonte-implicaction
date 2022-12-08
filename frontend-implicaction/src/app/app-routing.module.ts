@@ -61,8 +61,14 @@ const routes: Routes = [
   {
     path: Univers.BUSINESS_AREA.url,
     loadChildren: () => import('./company/company.module').then(m => m.CompanyModule),
+  },
+
+  {
+    path: 'chat',
+    loadChildren: () => import('./chat-page/chat-page.module').then(m => m.ChatPageModule),
   }
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
