@@ -104,7 +104,7 @@ export class UserListComponent extends BaseWithPaginationAndFilterComponent<User
   }
 
   redirectToChat(){
-    this.router.navigate(['/chat']);
+    this.router.navigate(['/message']);
   }
 
   confirmUserAsFriend(sender: User): void {

@@ -15,6 +15,7 @@ import {SidebarModule} from 'primeng/sidebar';
 import {BoardModule} from './board/board.module';
 import {registerLocaleData} from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { RxStompService  } from '@stomp/ng2-stompjs';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,7 @@ import localeFr from '@angular/common/locales/fr';
     BoardModule,
     HttpClientXsrfModule
   ],
-  providers: [MessageService, {provide: LOCALE_ID, useValue: 'fr'}],
+  providers: [MessageService, RxStompService, {provide: LOCALE_ID, useValue: 'fr'}],
   bootstrap: [AppComponent]
 })
 export class AppModule {

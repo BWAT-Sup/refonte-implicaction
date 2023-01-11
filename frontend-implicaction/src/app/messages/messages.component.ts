@@ -1,35 +1,23 @@
-import {Component, Input, TemplateRef} from '@angular/core';
-import {Constants} from "../config/constants";
-import {Univers} from "../shared/enums/univers";
-import {User} from "../shared/models/user";
-import { rxStompServiceFactory } from '../shared/services/rx-stomp.service.factory';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import { RxStompService } from '../config/rx-stomp.service';
 import { Message } from '@stomp/stompjs';
 import { Subscription } from 'rxjs';
-import {RxStompService} from "@stomp/ng2-stompjs";
-
 
 @Component({
-  selector: 'app-chat-page',
-  templateUrl: './chat-page.component.html',
-  styleUrls: ['./chat-page.component.scss']
+  selector: 'app-messages',
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.scss'],
 })
-export class ChatPageComponent {
-
+export class MessagesComponent implements OnInit, OnDestroy {
   receivedMessages: Message[] = [];
   // @ts-ignore, to suppress warning related to being undefined
   private topicSubscription: Subscription;
+  @ViewChild('lesbogoss') bogoss: ElementRef | undefined;
+  @ViewChild('message') message: ElementRef | undefined;
+
   constructor(private rxStompService: RxStompService ) {}
-  readonly constant = Constants;
-  readonly univer = Univers;
-
-  @Input()
-  user: User;
-
-  @Input()
-  innerTemplate: TemplateRef<any>;
 
   ngOnInit() {
-    this.rxStompService = rxStompServiceFactory();
     this.topicSubscription = this.rxStompService
       .watch('/topic/demo')
       .subscribe((message: Message) => {
@@ -41,14 +29,16 @@ export class ChatPageComponent {
     this.topicSubscription.unsubscribe();
   }
 
-
   onSendMessage() {
+    let message = this.message?.nativeElement.value;
+    let user = this.bogoss?.nativeElement.value;
     let date = new Date();
+    console.log(message);
     this.rxStompService.publish({
       destination: '/topic/demo',
-      body: "message",
+      body: message,
       headers:{
-        user:"user",
+        user:user,
         time:[
           date.getHours().toString().padStart(2, '0'),
           date.getMinutes().toString().padStart(2, '0'),
@@ -57,6 +47,4 @@ export class ChatPageComponent {
       }
     });
   }
-
-
 }
