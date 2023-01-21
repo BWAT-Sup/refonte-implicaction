@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.BeanIds;
@@ -17,16 +18,19 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.DefaultSecurityFilterChain;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import static com.dynonuggets.refonteimplicaction.utils.ApiUrls.*;
 
-@EnableWebSecurity
 @AllArgsConstructor
 @EnableScheduling
+@Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableWebSecurity
+//@ComponentScan("com.baeldung.springsecuredsockets")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private static final String[] AUTH_WHITELIST = {
@@ -34,6 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/api/auth/signup",
             "/api/auth/login",
             "/api/auth/refresh/token",
+            "/secured/chat",
+            "/secured/history",
             POSTS_BASE_URI + GET_LATEST_POSTS_URI + "/**",
             JOBS_BASE_URI + GET_LATEST_JOBS_URI + "/**",
             JOBS_BASE_URI + VALIDATED_JOBS + "?**",
@@ -114,6 +120,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+    /*@Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                .antMatchers("/", "/index", "/authenticate").permitAll()
+                .antMatchers(
+                        "/secured/**\/**",
+                        "/secured/success",
+                        "/secured/socket",
+                        "/secured/success").authenticated()
+                .anyRequest().authenticated()
+                .and()
+                .headers()
+                .frameOptions().sameOrigin()
+                .and()
+                .authorizeRequests();
+        return http.build();
+    }*/
 
 
 }
