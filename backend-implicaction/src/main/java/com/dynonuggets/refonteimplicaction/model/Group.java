@@ -43,6 +43,13 @@ public class Group {
     @ManyToMany(fetch = FetchType.LAZY, cascade = ALL, mappedBy = "groups")
     private List<User> users;
 
+        /*Ajouter lors de l'implémentation des groupes
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "group_chat_room",
+            joinColumns = {@JoinColumn(name = "group_id")},
+            inverseJoinColumns = {@JoinColumn(name = "chat_room_id")})
+    private List<ChatRoom> chatRooms;*/
+
     @Column(name = "valid")
     private boolean valid;
 }
