@@ -64,4 +64,5 @@ export class ChatPageComponent {
   showMessage(message) {
     this.greetings.push(message);
   }
+
 }

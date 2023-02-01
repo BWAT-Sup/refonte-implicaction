@@ -55,6 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/chat/**",
             "/socket/**",
             "/auth/**",
+            "/chat/**",
             "/error",
             "/index.html",
             "/*.js",

@@ -10,7 +10,9 @@ import {RelationType} from '../../models/relation-type.enum';
 import {finalize} from 'rxjs/operators';
 import {Univers} from '../../../shared/enums/univers';
 import {MenuItem} from 'primeng/api';
-import {BaseWithPaginationAndFilterComponent} from '../../../shared/components/base-with-pagination-and-filter/base-with-pagination-and-filter.component';
+import {
+  BaseWithPaginationAndFilterComponent
+} from '../../../shared/components/base-with-pagination-and-filter/base-with-pagination-and-filter.component';
 import {Criteria} from '../../../shared/models/Criteria';
 
 enum UserListType {
@@ -91,32 +93,6 @@ export class UserListComponent extends BaseWithPaginationAndFilterComponent<User
     this.paginate();
   }
 
-  protected innerPaginate(): void {
-    let user$: Observable<any>;
-
-    // on détermine quel est l'observable auquel s'abonner en fonction du type d'utilisateurs à afficher
-    if (this.listType === UserListType.ALL_USERS) {
-      user$ = this.userService.getAllCommunity(this.pageable);
-    } else if (this.listType === UserListType.FRIENDS) {
-      user$ = this.userService.getUserFriends(this.currentUser?.id, this.pageable);
-    } else if (this.listType === UserListType.FRIENDS_RECEIVED) {
-      user$ = this.userService.getUserFriendRequestReceived(this.pageable);
-    } else if (this.listType === UserListType.FRIENDS_SENT) {
-      user$ = this.userService.getUserFriendRequestSent(this.pageable);
-    }
-
-    user$.pipe(finalize(() => this.isLoading = false))
-      .subscribe(
-        data => {
-          this.pageable.totalPages = data.totalPages;
-          this.pageable.rows = data.size;
-          this.pageable.totalElements = data.totalElements;
-          this.pageable.content = data.content;
-        },
-        () => this.toastService.error('Oops', 'Une erreur est survenue lors de la récupération de la liste des utilisateurs')
-      );
-  }
-
   requestUserAsFriend(user: User): void {
     this.relationService
       .requestFriend(user.id)
@@ -125,6 +101,10 @@ export class UserListComponent extends BaseWithPaginationAndFilterComponent<User
         () => this.toastService.error('Oops', 'Une erreur est survenue'),
         () => this.toastService.success('Demande effectuée', `Votre demande a bien été envoyée à ${user.firstname}`)
       );
+  }
+
+  redirectToChat(){
+    this.router.navigate(['/chat']);
   }
 
   confirmUserAsFriend(sender: User): void {
@@ -169,4 +149,32 @@ export class UserListComponent extends BaseWithPaginationAndFilterComponent<User
         () => this.toastService.success('Succès', message)
       );
   }
+
+  protected innerPaginate(): void {
+    let user$: Observable<any>;
+
+    // on détermine quel est l'observable auquel s'abonner en fonction du type d'utilisateurs à afficher
+    if (this.listType === UserListType.ALL_USERS) {
+      user$ = this.userService.getAllCommunity(this.pageable);
+    } else if (this.listType === UserListType.FRIENDS) {
+      user$ = this.userService.getUserFriends(this.currentUser?.id, this.pageable);
+    } else if (this.listType === UserListType.FRIENDS_RECEIVED) {
+      user$ = this.userService.getUserFriendRequestReceived(this.pageable);
+    } else if (this.listType === UserListType.FRIENDS_SENT) {
+      user$ = this.userService.getUserFriendRequestSent(this.pageable);
+    }
+
+    user$.pipe(finalize(() => this.isLoading = false))
+      .subscribe(
+        data => {
+          this.pageable.totalPages = data.totalPages;
+          this.pageable.rows = data.size;
+          this.pageable.totalElements = data.totalElements;
+          this.pageable.content = data.content;
+        },
+        () => this.toastService.error('Oops', 'Une erreur est survenue lors de la récupération de la liste des utilisateurs')
+      );
+  }
+
+
 }

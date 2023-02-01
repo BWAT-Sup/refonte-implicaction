@@ -16,19 +16,22 @@ import {
   Inbox,
   Mail,
   MapPin,
+  MoreVertical,
   Phone,
   Plus,
   RotateCcw,
   Save,
   Search,
+  Send,
   Shield,
+  Smile,
   Trash2,
   User,
   UserCheck,
   UserMinus,
   UserPlus,
   Users,
-  UserX,
+  UserX
 } from 'angular-feather/icons';
 
 // Select some icons (use an object, not an array)
@@ -59,7 +62,10 @@ const icons = {
   Search,
   MapPin,
   Compass,
-  Globe
+  Globe,
+  Smile,
+  Send,
+  MoreVertical
 };
 
 @NgModule({

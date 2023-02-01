@@ -5,8 +5,8 @@
         <a
           *ngFor="let menuItem of menuItems"
           [routerLinkActiveOptions]="{exact: true}"
-          class="list-group-item list-group-item-action"
           [routerLink]=menuItem.routerLink
+          class="list-group-item list-group-item-action"
           routerLinkActive="active"
         >
           {{menuItem.label}}
@@ -16,8 +16,8 @@
   </div>
 
   <div
-    class="d-flex col-12 col-md-8 col-xl-9 flex-wrap justify-content-center"
     [ngClass]="{'justify-content-sm-between justify-content-md-start': !isLoading}"
+    class="d-flex col-12 col-md-8 col-xl-9 flex-wrap justify-content-center"
   >
     <ng-container *ngIf="isLoading; else userList">
       <div class="d-flex justify-content-center spinner">
@@ -30,10 +30,10 @@
     <ng-template #userList>
       <app-user-card
         *ngFor="let user of pageable.content; trackBy: trackByItemId; let isOdd = odd; let isEven = even"
-        class="col-12 col-sm-6 col-xl-4 col-xxl-3 d-flex justify-content-center justify-content-md-center mb-4"
-        [user]="user"
-        [ngClass]="{'pe-sm-3 pe-lg-0 pe-xl-3 justify-content-sm-start': isEven, 'ps-sm-3 px-lg-3 ps-xl-0 justify-content-sm-end': isOdd}"
         [innerTemplate]="innerControls"
+        [ngClass]="{'pe-sm-3 pe-lg-0 pe-xl-3 justify-content-sm-start': isEven, 'ps-sm-3 px-lg-3 ps-xl-0 justify-content-sm-end': isOdd}"
+        [user]="user"
+        class="col-12 col-sm-6 col-xl-4 col-xxl-3 d-flex justify-content-center justify-content-md-center mb-4"
       >
         <ng-template #innerControls>
           <div class="d-flex flex-column gap-2 mt-5 inner-controls">
@@ -41,14 +41,14 @@
               <ng-template [ngSwitchCase]="relationType.FRIEND">
                 <p class="text-center">Vous êtes amis</p>
                 <button
-                  (click)="removeUserRelation(user)"
+                  (click)="redirectToChat()"
                   class="btn btn-primary"
                   data-bs-placement="top"
                   data-bs-toggle="tooltip"
                   title="Supprimer des amis"
                   type="button"
                 >
-                  Supprimer
+                  Message
                 </button>
               </ng-template>
 
