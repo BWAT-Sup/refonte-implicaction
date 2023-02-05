@@ -52,6 +52,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/jobs/**",
             "/board/**",
             "/admin/**",
+            "/chat/**",
+            "/socket/**",
             "/auth/**",
             "/chat/**",
             "/error",

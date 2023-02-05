@@ -30,7 +30,7 @@ spring:
     name: Implicaction
 
 jwt:
-  expiration_time: 900000
+  expiration_time: 900000000
   key_store:
     type: JKS
     file: ${KS_PATH}
@@ -53,5 +53,3 @@ cloud:
       auto: false
     s3:
       region: ${AWS_REGION}
-
-

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {PaginatorModule} from 'primeng/paginator';
 import {SharedModule} from '../shared/shared.module';
-import {ChatPageRoutingModule} from "./chat-page-routing.module";
+import {ChatPageRoutingModule} from "../chat-page/components/chat-page-routing.module";
 import {FeatherModule} from 'angular-feather';
 import {ChatPageComponent} from "./chat-page.component";
 

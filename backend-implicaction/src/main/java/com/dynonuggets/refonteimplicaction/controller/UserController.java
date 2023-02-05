@@ -6,6 +6,7 @@ import com.dynonuggets.refonteimplicaction.service.AuthService;
 import com.dynonuggets.refonteimplicaction.service.GroupService;
 import com.dynonuggets.refonteimplicaction.service.RelationService;
 import com.dynonuggets.refonteimplicaction.service.UserService;
+import com.dynonuggets.refonteimplicaction.storage.UserStorage;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,11 +16,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.dynonuggets.refonteimplicaction.utils.ApiUrls.*;
 
 @RestController
 @AllArgsConstructor
+@CrossOrigin
 @RequestMapping(USER_BASE_URI)
 public class UserController {
 
@@ -28,7 +31,24 @@ public class UserController {
     private final AuthService authService;
     private final GroupService groupService;
 
+    @GetMapping("/registration/{userName}")
+    public ResponseEntity<Void> register(@PathVariable String userName) {
+        System.out.println("handling register user request: " + userName);
+        try {
+            UserStorage.getInstance().setUser(userName);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/fetchAllUsers")
+    public Set<String> fetchAll() {
+        return UserStorage.getInstance().getUsers();
+    }
+
     @GetMapping
+
     public ResponseEntity<Page<UserDto>> getAll(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "rows", defaultValue = "10") int rows
@@ -114,5 +134,4 @@ public class UserController {
         final List<GroupDto> groupsDto = userService.getUserGroups(userId);
         return ResponseEntity.ok(groupsDto);
     }
-
 }
