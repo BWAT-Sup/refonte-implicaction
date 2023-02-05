@@ -6,7 +6,6 @@ import {AuthService} from '../shared/services/auth.service';
 import { Client, StompHeaders, Frame } from '@stomp/stompjs';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-import { SocketResponse} from '../models';
 
 @Component({
   selector: 'app-chat-page',
@@ -56,18 +55,11 @@ export class ChatPageComponent {
 
     console.log("send");
   }
-  private getMessage = data => {
-    const response: SocketResponse = {
-      type: 'SUCCESS',
-      message: JSON.parse(data.body)
-    };
-    return response;
-  }
 
- /* showMessage(message) {
+ showMessage(message) {
     this.greetings.push(message);
     console.log(" this.greetings");
-  }*/
+  }
 
   /*async connect() {
     this.client = new Client({
