@@ -16,23 +16,16 @@
       </ul>
     </div>
     <div class="chat">
-      <div class="message my_side_message">
-        <p>salut ca va ?<br><span>11h12</span></p>
-      </div>
-      <div class="message other_side_message">
-        <p>Hello jdhufdhciudhzfuizehfuizeh <br><span>11h15</span></p>
-      </div>
-      <div class="message my_side_message">
-        <p>Hai bdhbdhbcbgdifuezuez<br><span>11h12</span></p>
-      </div>
-      <div class="message other_side_message">
-        <p>Hello jdhufdhciudhzfuizehfuizeh <br><span>11h15</span></p>
+      <!-- exemple msg-->
+      <div *ngFor="let message of greetings" class="message my_side_message">
+        <p>{{ message }}<span>11h12</span></p>
       </div>
     </div>
+
     <div class="chatInput">
       <i-feather name="plus"></i-feather>
       <i-feather name="smile"></i-feather>
-      <input placeholder="Rédigez Texte" type="text">
+      <input placeholder="Rédigez Texte" type="text" [(ngModel)]="newmessage">
       <i-feather (click)="sendMessage()" name="send"></i-feather>
 
     </div>
@@ -42,38 +35,17 @@
       <h4><u class="underline">Liste de discussions</u></h4>
     </div>
     <div class="amis">
+      <!-- exemple user-->
       <div class="imgtext">
         <div class="userimg">
           <img class="cover" src="../../assets/img/image.jpeg">
         </div>
         <h4>Wendy<br><span class="hors"></span><span>Hors Ligne</span></h4>
       </div>
-      <div class="imgtext" style="margin-top: 20px">
-        <div class="userimg">
-          <img class="cover" src="../../assets/img/image.jpeg">
-        </div>
-        <h4>Antoine<br><span class="dispo"></span><span>Disponible</span></h4>
-      </div>
-      <div class="imgtext" style="margin-top: 20px">
-        <div class="userimg">
-          <img class="cover" src="../../assets/img/image.jpeg">
-        </div>
-        <h4>Tina<br><span class="hors"></span><span>Hors Ligne</span></h4>
-      </div>
-      <div class="imgtext" style="margin-top: 20px">
-        <div class="userimg">
-          <img class="cover" src="../../assets/img/image.jpeg">
-        </div>
-        <h4>Matthieu<br><span class="hors"></span><span>Hors Ligne</span></h4>
-      </div>
 
-
+      <div class="button" type="button">
+        Créer un groupe
+      </div>
     </div>
-    <div class="button" type="button">
-      Créer un groupe
-
-    </div>
-
   </div>
-
 </div>

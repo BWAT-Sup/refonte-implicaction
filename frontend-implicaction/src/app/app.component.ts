@@ -1,57 +1,52 @@
-import {Component, OnInit} from '@angular/core';
-import * as Stomp from 'stompjs';
-import * as SockJS from 'sockjs-client';
-
+import {Component, ComponentFactoryResolver, HostBinding, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {SidebarService} from './shared/services/sidebar.service';
+import {SidebarContentComponent, SidebarProps} from './shared/models/sidebar-props';
+import {SidebarContentDirective} from './shared/directives/sidebar-content.directive';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  title = 'WebSocketChatRoom';
-  greetings: string[] = [];
-  disabled = true;
-  newmessage: string;
-  private stompClient = null;
+export class AppComponent implements OnInit, OnDestroy {
+  sidebarProps: SidebarProps;
+  @ViewChild(SidebarContentDirective, {static: true})
+  sidebarContent: SidebarContentDirective;
+  private sidebarSubject: Subscription;
+  @HostBinding('style.--sidebar-content-width')
+  private sidebarContentWidth: string;
 
-  constructor() {
+  constructor(
+    private componentFactoryResolver: ComponentFactoryResolver,
+    public sidebarService: SidebarService
+  ) {
   }
 
-  ngOnInit() {
-    this.connect();
+  ngOnInit(): void {
+    this.sidebarSubject = this.sidebarService
+      .getContent()
+      .subscribe(content => this.loadComponent(content))
+    ;
   }
 
-  setConnected(connected: boolean) {
-    this.disabled = !connected;
-    if (connected) {
-      this.greetings = [];
+  ngOnDestroy(): void {
+    this.sidebarSubject?.unsubscribe();
+  }
+
+  private loadComponent(content: SidebarProps): void {
+    if (!content) {
+      return;
     }
-  }
 
-  connect() {
-    const socket = new SockJS('http://localhost:8080/socket');
-    this.stompClient = Stomp.over(socket);
-    const _this = this;
-    this.stompClient.connect({}, function (frame) {
-      console.log('Connected: ' + frame);
-      _this.stompClient.subscribe('socket/testChat', function (hello) {
-        console.log(JSON.parse(hello.body));
-        _this.showMessage(JSON.parse(hello.body));
-      });
-    });
-  }
+    this.sidebarProps = content;
+    this.sidebarContentWidth = `${this.sidebarProps.width}px`;
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(content.component);
+    const viewContainerRef = this.sidebarContent.viewContainerRef;
+    viewContainerRef.clear();
 
-  sendMessage() {
-    this.stompClient.send(
-      '/app/socket/chat',
-      {},
-      JSON.stringify(this.newmessage)
-    );
-    this.newmessage = "";
-  }
-
-  showMessage(message) {
-    this.greetings.push(message);
+    // instanciation dynamique du contenu de la sidebar
+    const componentRef = viewContainerRef.createComponent<SidebarContentComponent>(componentFactory);
+    componentRef.instance.sidebarInput = content.input;
   }
 }

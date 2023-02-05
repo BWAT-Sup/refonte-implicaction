@@ -1,163 +1,29 @@
 <app-header></app-header>
-
-<div *ngFor="let string of greetings">
-  <div class="container">
-    <p>{{string}}</p>
-  </div>
-</div>
-<form #loginForm=ngForm>
-  <div>
-    <br>
-    <textarea [(ngModel)]="newmessage" autocomplete="off" name="newmessage" placeholder="Type Your Message..."
-              required></textarea>
-    <button (click)="sendMessage()" [disabled]="!loginForm.valid" class="btn btn-primary">Send</button>
-  </div>
-</form>
-
-
-<div id="container">
-  <aside>
-    <header>
-      <input placeholder="search" type="text">
-    </header>
-    <ul>
-      <li>
-        <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_04.jpg">
-        <div>
-          <h2>Tina ACHIR</h2>
-          <h3>
-            <span class="status orange"></span>
-            offline
-          </h3>
-        </div>
-      </li>
-      <li>
-        <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_02.jpg">
-        <div>
-          <h2>Antoine D</h2>
-          <h3>
-            <span class="status green"></span>
-            online
-          </h3>
-        </div>
-      </li>
-      <li>
-        <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_03.jpg">
-        <div>
-          <h2>Matthieu</h2>
-          <h3>
-            <span class="status orange"></span>
-            offline
-          </h3>
-        </div>
-      </li>
-      <li>
-        <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_04.jpg">
-        <div>
-          <h2>Bindhu D</h2>
-          <h3>
-            <span class="status green"></span>
-            online
-          </h3>
-        </div>
-      </li>
-      <li>
-        <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_05.jpg">
-        <div>
-          <h2>Wendy c</h2>
-          <h3>
-            <span class="status orange"></span>
-            offline
-          </h3>
-        </div>
-      </li>
-    </ul>
-  </aside>
-  <main>
-    <header>
-      <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_02.jpg">
-      <div>
-        <h2>Chat with Antoine D</h2>
-        <h3>already 1902 messages</h3>
+<main class="mx-2 mx-sm-5 my-3 my-md-5">
+  <router-outlet></router-outlet>
+  <p-toast
+    [hideTransformOptions]="'translateX(0)'"
+    [showTransformOptions]="'translateX(100%)'"
+    position="bottom-right"
+  >
+  </p-toast>
+  <p-sidebar
+    (onHide)="sidebarService.close()"
+    [(visible)]="sidebarService.isOpen"
+    [blockScroll]="true"
+    [transitionOptions]="'350ms'"
+    position="right"
+  >
+    <div class="content-container">
+      <div class="row no-gutters header align-items-center">
+        <div class="col-10 sidebar-title">{{sidebarProps?.title}}</div>
       </div>
-      <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png">
-    </header>
-    <ul id="chat">
-      <li class="you">
-        <div class="entete">
-          <span class="status green"></span>
-          <h2>Antoine</h2>
-          <h3>10:12AM, Today</h3>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>Moi</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>Moi</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          OK
-        </div>
-      </li>
-      <li class="you">
-        <div class="entete">
-          <span class="status green"></span>
-          <h2>Antoine</h2>
-          <h3>10:12AM, Today</h3>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>Moi</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor.
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>Moi</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          OK
-        </div>
-      </li>
-    </ul>
-
-
-    <footer>
-      <textarea placeholder="Type your message"></textarea>
-      <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png">
-      <img alt="" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png">
-      <a (click)="sendMessage()">Send</a>
-    </footer>
-  </main>
-</div>
+      <div class="content">
+        <ng-template appSidebarContent>
+          <!-- le contenu du composant en input sera injecté et affiché ici -->
+        </ng-template>
+      </div>
+    </div>
+  </p-sidebar>
+</main>
 
