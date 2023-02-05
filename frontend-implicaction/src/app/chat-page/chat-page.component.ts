@@ -3,7 +3,6 @@ import {Constants} from "../config/constants";
 import {Univers} from "../shared/enums/univers";
 import {User} from "../shared/models/user";
 import {AuthService} from '../shared/services/auth.service';
-import { Client, StompHeaders, Frame } from '@stomp/stompjs';
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 
@@ -26,7 +25,6 @@ export class ChatPageComponent {
   newmessage: string;
   messages:  string[] = [];
 
-  client: Client
   private stompClient = null;
 
   constructor(private authService: AuthService) {
