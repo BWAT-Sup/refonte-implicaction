@@ -1,5 +1,21 @@
 <div class="card card-user shadow-sm border-0">
-  <div class="card-header"></div>
+  <div class="card-header">
+    <nav>
+      <li class="hov">
+        <i-feather name="more-vertical"></i-feather>
+        <ul class="main">
+          <li title="Bloquer"><i class="fa fa-ban"></i></li>
+          <li title="Signaler"><i class="fa fa-exclamation"></i></li>
+          <ng-container [ngSwitch]="user.relationTypeOfCurrentUser">
+            <ng-template [ngSwitchCase]="relationType.FRIEND">
+              <li title="Supprimer"><i (click)="removeUserRelation(user)" class="fa fa-trash" style="color: red"></i>
+              </li>
+            </ng-template>
+          </ng-container>
+        </ul>
+      </li>
+    </nav>
+  </div>
   <div class="img-container d-flex align-items-center justify-content-center">
     <img
       #userImage
@@ -14,8 +30,8 @@
       <span class="link-profile overflow-ellipsis">
         <a
           class="text-decoration-none"
-          title="{{user.firstname}} {{user.lastname}}"
           routerLink="/{{univer.USERS.url}}/{{user.id}}/profile"
+          title="{{user.firstname}} {{user.lastname}}"
         >
           {{user.firstname}} {{user.lastname}}
         </a>
